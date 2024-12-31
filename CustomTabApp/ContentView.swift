@@ -28,10 +28,10 @@ struct Home: View {
             TabView(selection: $selectedtab){
                 Color.blue
                     .ignoresSafeArea()
-                    .tag("house")
+                    .tag("house.fill")
                 Color.pink
                     .ignoresSafeArea()
-                    .tag("shippingbox")
+                    .tag("gift.fill")
             }
 
             HStack(spacing: 0){
@@ -67,10 +67,8 @@ struct Home: View {
                 }
             }
             .padding(.horizontal,90)
-            .padding(.vertical)
+            .padding(.vertical, 20)
             .background(Color.white.clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12))
-            .padding(.horizontal)
-            .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom)
         }
         .ignoresSafeArea(.all, edges: .bottom)
     }
@@ -79,7 +77,7 @@ struct Home: View {
         switch image {
         case "house":
             return Color.blue
-        case "shippingbox":
+        case "gift.fill":
             return Color.pink
 
         default:
@@ -88,33 +86,35 @@ struct Home: View {
     }
 }
 
-var tabs = ["house","shippingbox"]
+var tabs = ["house.fill","gift.fill"]
 
 struct CustomShape: Shape {
 
     var xAxis: CGFloat
+    var offset: CGFloat = 15
+
     var animatableData: CGFloat {
-        get{return xAxis}
-        set{xAxis = newValue}
+        get { return xAxis }
+        set { xAxis = newValue }
     }
 
     func path(in rect: CGRect) -> Path {
-        return Path{path in
+        return Path { path in
             path.move(to: CGPoint(x: 0, y: 0))
             path.addLine(to: CGPoint(x: rect.width, y: 0))
             path.addLine(to: CGPoint(x: rect.width, y: rect.height))
             path.addLine(to: CGPoint(x: 0, y: rect.height))
 
-            let center = xAxis
-            path.move(to: CGPoint(x: center - 50, y: 0))
+            let center = xAxis + offset
+            path.move(to: CGPoint(x: center - 70, y: 0))
 
-            let to1 = CGPoint(x: center, y: 35)
-            let control1 = CGPoint(x: center - 25, y: 0)
-            let control2 = CGPoint(x: center - 25, y: 35)
+            let to1 = CGPoint(x: center, y: 40)
+            let control1 = CGPoint(x: center - 35, y: 0)
+            let control2 = CGPoint(x: center - 35, y: 40)
 
-            let to2 = CGPoint(x: center + 50, y: 0)
-            let control3 = CGPoint(x: center + 25, y: 35)
-            let control4 = CGPoint(x: center + 25, y: 0)
+            let to2 = CGPoint(x: center + 70, y: 0)
+            let control3 = CGPoint(x: center + 35, y: 40)
+            let control4 = CGPoint(x: center + 35, y: 0)
 
             path.addCurve(to: to1, control1: control1, control2: control2)
             path.addCurve(to: to2, control1: control3, control2: control4)
