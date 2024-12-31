@@ -32,13 +32,6 @@ struct Home: View {
                 Color.pink
                     .ignoresSafeArea()
                     .tag("shippingbox")
-                Color.purple
-                    .ignoresSafeArea()
-                    .tag("bell")
-                Color.green
-                    .ignoresSafeArea()
-                    .tag("message")
-
             }
 
             HStack(spacing: 0){
@@ -73,7 +66,7 @@ struct Home: View {
                     if image != tabs.last{Spacer(minLength: 0)}
                 }
             }
-            .padding(.horizontal,30)
+            .padding(.horizontal,90)
             .padding(.vertical)
             .background(Color.white.clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12))
             .padding(.horizontal)
@@ -88,10 +81,6 @@ struct Home: View {
             return Color.blue
         case "shippingbox":
             return Color.pink
-        case "bell":
-            return Color.purple
-        case "message":
-            return Color.green
 
         default:
             return Color.blue
@@ -99,7 +88,7 @@ struct Home: View {
     }
 }
 
-var tabs = ["house","shippingbox","bell","message"]
+var tabs = ["house","shippingbox"]
 
 struct CustomShape: Shape {
 
