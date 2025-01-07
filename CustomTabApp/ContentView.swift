@@ -28,10 +28,17 @@ struct Home: View {
             TabView(selection: $selectedtab){
                 Color.blue
                     .ignoresSafeArea()
-                    .tag("house.fill")
+                    .tag("house")
                 Color.pink
                     .ignoresSafeArea()
-                    .tag("gift.fill")
+                    .tag("shippingbox")
+                Color.purple
+                    .ignoresSafeArea()
+                    .tag("bell")
+                Color.green
+                    .ignoresSafeArea()
+                    .tag("message")
+
             }
 
             HStack(spacing: 0){
@@ -66,9 +73,11 @@ struct Home: View {
                     if image != tabs.last{Spacer(minLength: 0)}
                 }
             }
-            .padding(.horizontal,90)
-            .padding(.vertical, 20)
+            .padding(.horizontal,30)
+            .padding(.vertical)
             .background(Color.white.clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12))
+            .padding(.horizontal)
+            .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom)
         }
         .ignoresSafeArea(.all, edges: .bottom)
     }
@@ -77,8 +86,12 @@ struct Home: View {
         switch image {
         case "house":
             return Color.blue
-        case "gift.fill":
+        case "shippingbox":
             return Color.pink
+        case "bell":
+            return Color.purple
+        case "message":
+            return Color.green
 
         default:
             return Color.blue
@@ -86,35 +99,33 @@ struct Home: View {
     }
 }
 
-var tabs = ["house.fill","gift.fill"]
+var tabs = ["house","shippingbox","bell","message"]
 
 struct CustomShape: Shape {
 
     var xAxis: CGFloat
-    var offset: CGFloat = 15
-
     var animatableData: CGFloat {
-        get { return xAxis }
-        set { xAxis = newValue }
+        get{return xAxis}
+        set{xAxis = newValue}
     }
 
     func path(in rect: CGRect) -> Path {
-        return Path { path in
+        return Path{path in
             path.move(to: CGPoint(x: 0, y: 0))
             path.addLine(to: CGPoint(x: rect.width, y: 0))
             path.addLine(to: CGPoint(x: rect.width, y: rect.height))
             path.addLine(to: CGPoint(x: 0, y: rect.height))
 
-            let center = xAxis + offset
-            path.move(to: CGPoint(x: center - 70, y: 0))
+            let center = xAxis
+            path.move(to: CGPoint(x: center - 50, y: 0))
 
-            let to1 = CGPoint(x: center, y: 40)
-            let control1 = CGPoint(x: center - 35, y: 0)
-            let control2 = CGPoint(x: center - 35, y: 40)
+            let to1 = CGPoint(x: center, y: 35)
+            let control1 = CGPoint(x: center - 25, y: 0)
+            let control2 = CGPoint(x: center - 25, y: 35)
 
-            let to2 = CGPoint(x: center + 70, y: 0)
-            let control3 = CGPoint(x: center + 35, y: 40)
-            let control4 = CGPoint(x: center + 35, y: 0)
+            let to2 = CGPoint(x: center + 50, y: 0)
+            let control3 = CGPoint(x: center + 25, y: 35)
+            let control4 = CGPoint(x: center + 25, y: 0)
 
             path.addCurve(to: to1, control1: control1, control2: control2)
             path.addCurve(to: to2, control1: control3, control2: control4)
